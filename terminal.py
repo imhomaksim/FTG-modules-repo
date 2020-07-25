@@ -269,7 +269,7 @@ class SudoMessageEditor(MessageEditor):
         if not handled:
             logger.debug("Didn't find sudo log.")
             if self.authmsg is not None:
-                await self.authmsg.delete()
+                await self.authmsg[0].delete()
                 self.authmsg = None
             self.state = 2
             await self.redraw()
