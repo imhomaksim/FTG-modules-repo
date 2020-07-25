@@ -249,7 +249,7 @@ class SudoMessageEditor(MessageEditor):
             logger.debug("edited message with link to self")
             command = "<code>" + utils.escape_html(self.command) + "</code>"
             user = utils.escape_html(lastlines[1][:-1])
-            self.authmsg = await self.message.client[0].send_message("me",
+            self.authmsg = await self.message[0].client.send_message("me",
                                                                      self.strings("auth_msg",
                                                                                   self.request_message).format(command,
                                                                                                                user))
@@ -269,7 +269,7 @@ class SudoMessageEditor(MessageEditor):
         if not handled:
             logger.debug("Didn't find sudo log.")
             if self.authmsg is not None:
-                await self.authmsg.delete()
+                await self.authmsg[0].delete()
                 self.authmsg = None
             self.state = 2
             await self.redraw()
