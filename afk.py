@@ -84,7 +84,7 @@ class AFKMod(loader.Module):
                 ret = self.strings("afk", message).format(diff)
             elif afk_state is not False:
                 ret = self.strings("afk_reason", message).format(diff, afk_state)
-            await utils.answer(message, ret)
+            await utils.answer(message, ret, reply_to=message)
 
     def get_afk(self):
         return self._db.get(__name__, "afk", False)
