@@ -38,6 +38,8 @@ class LydiaMod(loader.Module):
                " enabled or disabled in this chat. Is this a group chat?</b>",
                "enable_error_user": "<b>The AI service cannot be"
                " enabled for this user. Perhaps it wasn't disabled?</b>",
+               "notif_off": "<b>Notifications from PMs are silenced.</b>",
+               "notif_on": "<b>Notifications from PMs are now activated.</b>",
                "successfully_enabled": "<b>AI enabled for this user. </b>",
                "successfully_enabled_for_chat": "<b>AI enabled for that user in this chat.</b>",
                "cannot_find": "<b>Cannot find that user.</b>",
@@ -47,13 +49,15 @@ class LydiaMod(loader.Module):
                "doc_client_key": "The API key for lydia, acquire from"
                " https://coffeehouse.intellivoid.net",
                "doc_ignore_no_common": "Boolean to ignore users who have no chats in common with you",
+               "doc_notif": "Boolean for notifications from PMs",
                "doc_disabled": "Whether Lydia defaults to enabled"
                                " in private chats (if True, you'll have to use forcelydia"}
 
     def __init__(self):
         self.config = loader.ModuleConfig("CLIENT_KEY", None, lambda m: self.strings("doc_client_key", m),
                                           "IGNORE_NO_COMMON", False, lambda m: self.strings("doc_ignore_no_common", m),
-                                          "DISABLED", False, lambda m: self.strings("doc_disabled", m))
+                                          "DISABLED", False, lambda m: self.strings("doc_disabled", m),
+                                          "NOTIF", False, lambda m: self.strings("doc_notif", m))
         self._ratelimit = []
         self._cleanup = None
         self._lydia = None
@@ -152,6 +156,16 @@ class LydiaMod(loader.Module):
         self._db.set(__name__, "sessions", {})
         return await utils.answer(message, self.strings("cleanup_sessions", message))
 
+    async def lydianotifoffcmd(self, message):
+        """Disable the notifications from PMs"""
+        self._db.set(__name__, "NOTIF", False)
+        await utils.answer(message, self.strings("notif_off", message))
+
+    async def lydianotifoncmd(self, message):
+        """Enable the notifications from PMs"""
+        self._db.set(__name__, "NOTIF", True)
+        await utils.answer(message, self.strings("notif_on", message))
+
     async def watcher(self, message):
         if not self.config["CLIENT_KEY"]:
             logger.debug("no key set for lydia, returning")
@@ -175,6 +189,8 @@ class LydiaMod(loader.Module):
                     fulluser = await message.client(functions.users.GetFullUserRequest(await utils.get_user(message)))
                     if fulluser.common_chats_count == 0:
                         return
+                if self._db.get(__name__, "NOTIF", False):
+                    await message.client.send_read_acknowledge(message.chat_id)
                 await message.client(functions.messages.SetTypingRequest(
                     peer=await utils.get_user(message),
                     action=types.SendMessageTypingAction()
