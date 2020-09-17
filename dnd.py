@@ -60,10 +60,10 @@ class DoNotDisturbMod(loader.Module):
                "pm_denied": "<b>I have denied</b> <a href='tg://user?id={}'>you</a> <b>to PM now.</b>",
                "pm_go_away": ("Bleep blop! This is a bot. Don't fret.\n\n"  
                               "`My master hasn't approved you to PM.\n\n`" 
-                                 "`Please wait for my master to look in, he mostly approves PMs.\n\n`"
-                                     "`As far as I know, he doesn't usually approve retards though.\n\n`"
+                                 "`Please wait for my master to look in, he mostly approves PMs.`\n\n"
+                                     "`As far as I know, he doesn't usually approve retards though.`\n\n"
                                     "Please contact me in a group, or <b>wait</b>"
-                                        "for me to approve you."),
+                                        _"for me to approve you."),
                "pm_reported": "<b>You just got reported to spam !</b>",
                "pm_limit_arg": "<b>Argument must be 'off', 'on' or a number between 5 and 1000 !</b>",
                "pm_limit_off": "<b>Not allowed users are now free to PM without be automatically blocked.</b>",
