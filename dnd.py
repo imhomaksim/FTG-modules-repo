@@ -318,10 +318,9 @@ class DoNotDisturbMod(loader.Module):
                         self._db.set(__name__, "pm_limit_max", pmlimit_number)
                         pmlimit_new = self.strings("pm_limit_set", message).format(self.get_current_pm_limit())
                         await utils.answer(message, pmlimit_new)
-                        return
                     else:
                         await utils.answer(message, self.strings("pm_limit_arg", message))
-                        return
+                    return
                 except ValueError:
                     await utils.answer(message, self.strings("pm_limit_arg", message))
                     return
@@ -392,25 +391,31 @@ class DoNotDisturbMod(loader.Module):
     async def watcher(self, message):
         user = await utils.get_user(message)
         pm = self._db.get(__name__, "pm")
-        if getattr(message.to_id, "user_id", None) == self._me.user_id and (pm is None or pm is False):
-            if not user.is_self and not user.bot and not user.verified and not self.get_allowed(message.from_id):
-                await utils.answer(message, self.strings("pm_go_away",message))
-                if self._db.get(__name__, "pm_limit") is True:
-                    pms = self._db.get(__name__, "pms", {})
-                    pm_limit = self._db.get(__name__, "pm_limit_max")
-                    pm_user = pms.get(message.from_id, 0)
-                    if isinstance(pm_limit, int) and pm_limit >= 5 and pm_limit <= 1000 and pm_user >= pm_limit:
-                        await utils.answer(message, self.strings("pm_triggered", message))
-                        await message.client(functions.contacts.BlockRequest(message.from_id))
-                        await message.client(functions.messages.ReportSpamRequest(peer=message.from_id))
-                        del pms[message.from_id]
-                        self._db.set(__name__, "pms", pms)
-                    else:
-                        self._db.set(__name__, "pms", {**pms, message.from_id: pms.get(message.from_id, 0) + 1})
-                pm_notif = self._db.get(__name__, "pm_notif")
-                if pm_notif is None or pm_notif is False:
-                    await message.client.send_read_acknowledge(message.chat_id)
-                return
+        if (
+            getattr(message.to_id, "user_id", None) == self._me.user_id
+            and (pm is None or pm is False)
+            and not user.is_self
+            and not user.bot
+            and not user.verified
+            and not self.get_allowed(message.from_id)
+        ):
+            await utils.answer(message, self.strings("pm_go_away",message))
+            if self._db.get(__name__, "pm_limit") is True:
+                pms = self._db.get(__name__, "pms", {})
+                pm_limit = self._db.get(__name__, "pm_limit_max")
+                pm_user = pms.get(message.from_id, 0)
+                if isinstance(pm_limit, int) and pm_limit >= 5 and pm_limit <= 1000 and pm_user >= pm_limit:
+                    await utils.answer(message, self.strings("pm_triggered", message))
+                    await message.client(functions.contacts.BlockRequest(message.from_id))
+                    await message.client(functions.messages.ReportSpamRequest(peer=message.from_id))
+                    del pms[message.from_id]
+                    self._db.set(__name__, "pms", pms)
+                else:
+                    self._db.set(__name__, "pms", {**pms, message.from_id: pms.get(message.from_id, 0) + 1})
+            pm_notif = self._db.get(__name__, "pm_notif")
+            if pm_notif is None or pm_notif is False:
+                await message.client.send_read_acknowledge(message.chat_id)
+            return
         if message.mentioned or getattr(message.to_id, "user_id", None) == self._me.user_id:
             afk_status = self._db.get(__name__, "afk")
             if user.is_self or user.bot or user.verified or afk_status is False:
