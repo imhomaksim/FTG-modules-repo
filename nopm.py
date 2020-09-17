@@ -43,9 +43,11 @@ class AntiPMMod(loader.Module):
                           "<b>of your PM permissions.</b>"),
                "notif_off": "<b>Notifications from denied PMs are silenced.</b>",
                "notif_on": "<b>Notifications from denied PMs are now activated.</b>",
-               "go_away": ("Hey there! Unfortunately, I don't accept private messages from "
-                            "strangers.\n\nPlease contact me in a group, or <b>wait</b> "
-                            "for me to approve you."),
+               "go_away": ("Bleep blop! This is a bot. Don't fret.\n\n`" 
+                            "`My master hasn't approved you to PM.\n\n"
+                             "`Please wait for my master to look in, he mostly approves PMs.\n\n`"
+                              "`As far as I know, he doesn't usually approve retards though.`"
+                              \n\nPlease contact me in a group, or <b>wait</b>" "for me to approve you."),
                "triggered": ("Hey! I don't appreciate you barging into my PM like this! "
                              "Did you even ask me for approving you to PM? No? Goodbye then."
                              "\n\nPS: you've been reported as spam already.")}
