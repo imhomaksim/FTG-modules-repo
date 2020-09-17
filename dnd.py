@@ -36,9 +36,9 @@ class DoNotDisturbMod(loader.Module):
      
     """
     strings = {"name": "DND",
-               "afk": "<b>I am going away🚀 for earth 🌍,  (since</b> <i>{}</i> <b>ago).</b>",
+               "afk": "<b>I'm in Moon🌙 right right now, I'll be back after a nap (since</b> <i>{}</i> <b>ago).</b>",
                "afk_back": "<b>I'm BACK to Earth 🌍 !</b>",
-               "afk_gone": "<b>I'm goin' AFK !</b>",
+               "afk_gone": "<b>I'm goin' Away🚀 from earth 🌍 !</b>",
                "afk_no_group_off": "<b>AFK status message enabled for group chats.</b>",
                "afk_no_group_on": "<b>AFK status message disabled for group chats.</b>",
                "afk_no_pm_off": "<b>AFK status message enabled for PMs.</b>",
