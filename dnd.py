@@ -36,9 +36,9 @@ class DoNotDisturbMod(loader.Module):
      
     """
     strings = {"name": "DND",
-               "afk": "<b>I'm AFK right now (since</b> <i>{}</i> <b>ago).</b>",
-               "afk_back": "<b>I'm goin' BACK !</b>",
-               "afk_gone": "<b>I'm goin' AFK !</b>",
+               "afk": "<b>I'm in Moon🌙 right right now, I'll be back after a nap(since</b> <i>{}</i> <b>ago).</b>",
+               "afk_back": "<b>I'm BACK to Earth 🌍 !</b>",
+               "afk_gone": "<b>I'm goin' Away🚀 from earth 🌍 !</b>",
                "afk_no_group_off": "<b>AFK status message enabled for group chats.</b>",
                "afk_no_group_on": "<b>AFK status message disabled for group chats.</b>",
                "afk_no_pm_off": "<b>AFK status message enabled for PMs.</b>",
@@ -48,7 +48,7 @@ class DoNotDisturbMod(loader.Module):
                "afk_rate_limit_off": "<b>AFK status message rate limit disabled.</b>",
                "afk_rate_limit_on": ("<b>AFK status message rate limit enabled.</b>"
                                      "\n\n<b>One AFK status message max will be sent per chat.</b>"),
-               "afk_reason": ("<b>I'm AFK right now (since {} ago).</b>"
+               "afk_reason": ("<b>I'm in Moon🌙 right right now, I'll be back after a nap(since {} ago).</b>"
                               "\n\n<b>Reason :</b> <i>{}</i>"),
                "arg_on_off": "<b>Argument must be 'off' or 'on' !</b>",
                "pm_off": ("<b>Automatic answer for denied PMs disabled."
@@ -58,8 +58,12 @@ class DoNotDisturbMod(loader.Module):
                "pm_blocked": ("<b>I don't want any PM from</b> <a href='tg://user?id={}'>you</a>, "
                               "<b>so you have been blocked !</b>"),
                "pm_denied": "<b>I have denied</b> <a href='tg://user?id={}'>you</a> <b>to PM now.</b>",
-               "pm_go_away": ("Hey there! Unfortunately, I don't accept private messages from strangers."
-                              "\n\nPlease contact me in a group, or <b>wait</b> for me to approve you."),
+               "pm_go_away": ("Bleep blop! This is a bot. Don't fret.\n\n"  
+                              "`My master hasn't approved you to PM.\n\n`" 
+                                 "`Please wait for my master to look in, he mostly approves PMs.`\n\n"
+                                     "`As far as I know, he doesn't usually approve retards though.`\n\n"
+                                    "Please contact me in a group, or <b>wait</b>"
+                                        "for me to approve you."),
                "pm_reported": "<b>You just got reported to spam !</b>",
                "pm_limit_arg": "<b>Argument must be 'off', 'on' or a number between 5 and 1000 !</b>",
                "pm_limit_off": "<b>Not allowed users are now free to PM without be automatically blocked.</b>",
