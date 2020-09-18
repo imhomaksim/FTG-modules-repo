@@ -49,7 +49,7 @@ class LydiaMod(loader.Module):
                "doc_client_key": "The API key for lydia, acquire from"
                " https://coffeehouse.intellivoid.net",
                "doc_ignore_no_common": "Boolean to ignore users who have no chats in common with you",
-               "doc_notif": "Boolean for notifications from PMs",
+               "doc_notif": "Boolean for notifications from PMs.",
                "doc_disabled": "Whether Lydia defaults to enabled"
                                " in private chats (if True, you'll have to use forcelydia"}
 
@@ -57,7 +57,7 @@ class LydiaMod(loader.Module):
         self.config = loader.ModuleConfig("CLIENT_KEY", None, lambda m: self.strings("doc_client_key", m),
                                           "IGNORE_NO_COMMON", False, lambda m: self.strings("doc_ignore_no_common", m),
                                           "DISABLED", False, lambda m: self.strings("doc_disabled", m),
-                                          "NOTIF", False, lambda m: self.strings("doc_notif", m))
+                                          "NOTIFY", False, lambda m: self.strings("doc_notif", m))
         self._ratelimit = []
         self._cleanup = None
         self._lydia = None
@@ -158,12 +158,14 @@ class LydiaMod(loader.Module):
 
     async def lydianotifoffcmd(self, message):
         """Disable the notifications from PMs"""
-        self._db.set(__name__, "NOTIF", False)
+        self._db[__name__]["__config__"]["NOTIFY"] = False
+        self._db.save()
         await utils.answer(message, self.strings("notif_off", message))
 
     async def lydianotifoncmd(self, message):
         """Enable the notifications from PMs"""
-        self._db.set(__name__, "NOTIF", True)
+        self._db[__name__]["__config__"]["NOTIFY"] = True
+        self._db.save()
         await utils.answer(message, self.strings("notif_on", message))
 
     async def watcher(self, message):
@@ -189,8 +191,8 @@ class LydiaMod(loader.Module):
                     fulluser = await message.client(functions.users.GetFullUserRequest(await utils.get_user(message)))
                     if fulluser.common_chats_count == 0:
                         return
-                if self._db.get(__name__, "NOTIF", False):
-                    await message.client.send_read_acknowledge(message.chat_id)
+                if self._db[__name__]["__config__"].get("NOTIFY", False):
+                    await message.mark_read()
                 await message.client(functions.messages.SetTypingRequest(
                     peer=await utils.get_user(message),
                     action=types.SendMessageTypingAction()
