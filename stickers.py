@@ -137,7 +137,7 @@ class StickersMod(loader.Module):
                                                                  msgs + [first])
                             return
                         uploaded = await message.client.upload_file(img, file_name="AnimatedSticker.tgs")
-                        m1 = await conv.send_file(uploaded, force_document=True)
+                        m1 = await conv.send_file(uploaded, force_document=False)
                         m2 = await conv.send_message(emojis)
                         await conv.send_message("/done")
                         # Block now so that we mark it all as read
