@@ -191,7 +191,7 @@ class LydiaMod(loader.Module):
                     fulluser = await message.client(functions.users.GetFullUserRequest(await utils.get_user(message)))
                     if fulluser.common_chats_count == 0:
                         return
-                if self._db[__name__]["__config__"].get("NOTIFY", False):
+                if not self._db[__name__]["__config__"].get("NOTIFY"):
                     await message.mark_read()
                 await message.client(functions.messages.SetTypingRequest(
                     peer=await utils.get_user(message),

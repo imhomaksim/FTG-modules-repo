@@ -14,7 +14,7 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# requires: search-engine-parser>=0.5.3
+# requires: search-engine-parser>=0.6.2
 
 import logging
 
