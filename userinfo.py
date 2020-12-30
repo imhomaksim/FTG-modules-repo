@@ -63,7 +63,7 @@ class UserInfoMod(loader.Module):
             if not args:
                 return await utils.answer(message, self.strings("no_args_or_reply", message))
             try:
-                full = await self.client(GetFullUserRequest(args[0]))
+                full = await self.client(GetFullUserRequest(int(args[0])))
             except ValueError:
                 return await utils.answer(message, self.strings("find_error", message))
         logger.debug(full)
