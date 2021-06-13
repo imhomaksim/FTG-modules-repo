@@ -61,9 +61,9 @@ class BanMod(loader.Module):
             user = await utils.get_user(await message.get_reply_message())
         else:
             args = utils.get_args(message)
-            if len(args) == 0:
+            if not args:
                 return await utils.answer(message, self.strings("ban_none", message))
-            user = await self.client.get_entity(args[0])
+            user = await self.client.get_entity(int_or_str(args[0]))
         if not user:
             return await utils.answer(message, self.strings("who", message))
         logger.debug(user)
@@ -87,9 +87,9 @@ class BanMod(loader.Module):
             user = await utils.get_user(await message.get_reply_message())
         else:
             args = utils.get_args(message)
-            if len(args) == 0:
+            if not args:
                 return await utils.answer(message, self.strings("unban_none", message))
-            user = await self.client.get_entity(args[0])
+            user = await self.client.get_entity(int_or_str(args[0]))
         if not user:
             return await utils.answer(message, self.strings("who", message))
         logger.debug(user)
@@ -113,9 +113,9 @@ class BanMod(loader.Module):
             user = await utils.get_user(await message.get_reply_message())
         else:
             args = utils.get_args(message)
-            if len(args) == 0:
+            if not args:
                 return await utils.answer(message, self.strings("kick_none", message))
-            user = await self.client.get_entity(args[0])
+            user = await self.client.get_entity(int_or_str(args[0]))
         if not user:
             return await utils.answer(message, self.strings("who", message))
         logger.debug(user)
@@ -142,11 +142,11 @@ class BanMod(loader.Module):
             args = utils.get_args(message)
             if not args:
                 return await utils.answer(message, self.strings("promote_none", message))
-            user = await self.client.get_entity(args[0])
+            user = await self.client.get_entity(int_or_str(args[0]))
         if not user:
             return await utils.answer(message, self.strings("who", message))
         rank = ""
-        if len(args) >= 1:
+        if args:
             rank = args[1]
         logger.debug(user)
         try:
@@ -174,9 +174,9 @@ class BanMod(loader.Module):
             user = await utils.get_user(await message.get_reply_message())
         else:
             args = utils.get_args(message)
-            if len(args) == 0:
+            if not args:
                 return await utils.answer(message, self.strings("demote_none", message))
-            user = await self.client.get_entity(args[0])
+            user = await self.client.get_entity(int_or_str(args[0]))
         if not user:
             return await utils.answer(message, self.strings("who", message))
         logger.debug(user)
@@ -208,9 +208,9 @@ class BanMod(loader.Module):
             user = await utils.get_user(await message.get_reply_message())
         else:
             args = utils.get_args(message)
-            if len(args) == 0:
+            if not args:
                 return await utils.answer(message, self.strings("mute_none", message))
-            user = await self.client.get_entity(args[0])
+            user = await self.client.get_entity(int_or_str(args[0]))
         if not user:
             return await utils.answer(message, self.strings("who", message))
         logger.debug(user)
@@ -232,9 +232,9 @@ class BanMod(loader.Module):
             user = await utils.get_user(await message.get_reply_message())
         else:
             args = utils.get_args(message)
-            if len(args) == 0:
+            if not args:
                 return await utils.answer(message, self.strings("unmute_none", message))
-            user = await self.client.get_entity(args[0])
+            user = await self.client.get_entity(int_or_str(args[0]))
         if not user:
             return await utils.answer(message, self.strings("who", message))
         logger.debug(user)
@@ -252,3 +252,10 @@ class BanMod(loader.Module):
 
     async def client_ready(self, client, db):
         self.client = client
+
+
+def int_or_str(arg):
+    try:
+        return int(arg)
+    except ValueError:
+        return arg
