@@ -64,4 +64,4 @@ class LyricsMod(loader.Module):
             return
         logger.debug(song)
         logger.debug(song.lyrics)
-        await utils.answer(message, utils.escape_html(song.lyrics))
+        await utils.answer(message, utils.escape_html(song.lyrics)) 
